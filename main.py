@@ -21,7 +21,7 @@ def fazer_login():
         print("\nLogin bem-sucedido!\n")
         menu_secundario()
     else:
-        print("\nE-mail ou senha incorretos. Tente novamente.\n")
+        print("\nE-mail ou senha incorretos. Tente novamenteeeee.\n")
 
 def registrar_conta():
     print("Registro de Conta")
