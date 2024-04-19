@@ -72,21 +72,21 @@ def menu_principal():
     else:
         print("Opção inválida. Tente novamente.\n")
     
-    # Voltar ao menu principal após a execução da opção selecionada
+    # Voltar ao menu principal após a execução
     menu_principal()
 
 def mostrar_usuarios():
     print("Lista de Usuários Registrados")
     print("-----------------------------")
     
-    # Cabeçalho da tabela
+   
     table_data = [["E-mail", "Nome"]]
     
     # Preencher dados da tabela
     for email, info in usuarios.items():
         table_data.append([email, info['Nome']])
     
-    # Criar e exibir tabela
+    
     table = AsciiTable(table_data)
     print(table.table)
 
@@ -112,11 +112,18 @@ def adicionar_amigo():
     print("Adicionar Amigo")
     print("---------------")
     
-    email_amigo = input("Digite o e-mail do amigo: ")
+    nome_amigo = input("Digite o nome do amigo: ")
     
-    # Verifica se o e-mail do amigo é válido
-    if email_amigo not in usuarios:
-        print("E-mail de amigo inválido. Tente novamente.")
+    # Procura o e-mail do amigo com base no nome fornecido
+    email_amigo = None
+    for email, info in usuarios.items():
+        if info['Nome'] == nome_amigo:
+            email_amigo = email
+            break
+    
+    # Verifica se o nome do amigo é válido
+    if email_amigo is None:
+        print("Nome de amigo inválido. Tente novamente.")
         return
     
     # Verifica se o amigo já está na lista de amigos
@@ -128,6 +135,45 @@ def adicionar_amigo():
     usuarios[usuario_logado]['Amigos'].append(email_amigo)
     
     print("\nAmigo adicionado com sucesso!\n")
+
+def formar_equipes():
+    print("Formar Equipes")
+    print("--------------")
+    
+    print("Usuários Adicionados:")
+    for i, email in enumerate(usuarios[usuario_logado]['Amigos'], 1):
+        print(f"{i}: {usuarios[email]['Nome']} ({email})")
+    
+    equipes = []
+    while True:
+        equipe = []
+        while True:
+            id_amigo = input("\nDigite o ID do amigo para adicionar à equipe (ou '0' para finalizar esta equipe): ")
+            if id_amigo == '0':
+                break
+            elif id_amigo.isdigit():
+                id_amigo = int(id_amigo)
+                if 1 <= id_amigo <= len(usuarios[usuario_logado]['Amigos']):
+                    equipe.append(usuarios[usuario_logado]['Amigos'][id_amigo - 1])
+                else:
+                    print("ID inválido. Tente novamente.")
+            else:
+                print("ID inválido. Tente novamente.")
+        
+        if equipe:
+            equipes.append(equipe)
+        else:
+            print("\nNenhum amigo adicionado à equipe.")
+        
+        continuar = input("\nDeseja adicionar mais usuários à equipe? (S/N): ")
+        if continuar.upper() != 'S':
+            break
+    
+    print("\nEquipes formadas:")
+    for i, equipe in enumerate(equipes, 1):
+        print(f"\nEquipe {i}:")
+        for email in equipe:
+            print(f"- {usuarios[email]['Nome']} ({email})")
 
 def menu_secundario():
     global usuario_logado
@@ -142,8 +188,9 @@ def menu_secundario():
         ["1", "Ver Lista de Usuários Registrados"],
         ["2", "Ver Lista de Amigos"],
         ["3", "Adicionar Amigo"],
-        ["4", "Deslogar"],
-        ["5", "Sair"]
+        ["4", "Formar Equipes"],
+        ["5", "Deslogar"],
+        ["6", "Sair"]
     ]
     
     # Criar e exibir tabela de opções
@@ -159,10 +206,12 @@ def menu_secundario():
     elif opcao == '3':
         adicionar_amigo()
     elif opcao == '4':
+        formar_equipes()
+    elif opcao == '5':
         usuario_logado = None
         print("\nDeslogado com sucesso!\n")
         menu_principal()
-    elif opcao == '5':
+    elif opcao == '6':
         print("Saindo...")
         return
     else:
