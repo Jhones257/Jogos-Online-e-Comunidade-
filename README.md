@@ -18,7 +18,7 @@ Para o desenvolvimento desta aplicação, foram aplicados a junção de conceito
     - Controle de Fluxo: O controle de fluxo é alcançado por meio de estruturas como loops, condicionais e desvios, semelhante ao paradigma imperativo.
     - Modularidade: O paradigma procedural promove a divisão do código em módulos menores e mais gerenciáveis, facilitando a manutenção e reutilização do código.
    
-# 🤔Por que utilizar esta junção paradigmas?
+# 🤔Por que utilizar esta junção de paradigmas?
 
 A combinação de diversos paradigmas de programação em um projeto tras diversos benéficios tanto para facilitar o processo de construção do projeto quanto para a organização e funcionalidade da aplicação. Ao combinar o paradigma imperativo com o paradigma procedural, temos uma abordagem mais flexível para o desenvolvimento do software principalmente com a possibilidade de podermos reutilizar o código ao escrever procedimentos e funções.
 
